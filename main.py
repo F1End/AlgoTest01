@@ -1,4 +1,6 @@
 from collections import defaultdict
+from typing import List
+import matching
 
 class Teacher:
     def __init__(self, name, availability):
@@ -29,6 +31,16 @@ class Student:
         for teacher in teachers:
             self.preferences[teacher.name] = teacher.availability
 
+def element_indexing(availability_list: List, preference_list: List) -> int:
+    """Returning which is the earliest number where an overlap occurs between two lists (indexed from 1).
+    Returning 0 if no overlap found."""
+    for pref in preference_list:
+        if pref in availability_list:
+            return preference_list.index(pref) + 1
+    return 0
+
+
+
 def gale_shapley(teachers, students):
     while True:
         free_teacher = None
@@ -49,11 +61,9 @@ def gale_shapley(teachers, students):
                     student.available = False
             else:
                 current_teacher = [t for t in teachers if student in t.students][0]
-                print(student.preferences[current_teacher.name]) #
-                print(student.availability) #
-                print(student.preferences[free_teacher.name]) #
-                print(student.preferences[free_teacher.name].index(student.availability))
-                if student.preferences[current_teacher.name].index(student.availability) > student.preferences[free_teacher.name].index(student.availability):
+                current_teacher_best = element_indexing(student.preferences[current_teacher.name],student.availability)
+                free_teacher_best = element_indexing(student.preferences[free_teacher.name],student.availability)
+                if current_teacher_best > free_teacher_best > 0:
                     current_teacher.students.remove(student)
                     free_teacher.students.append(student)
                     student.available = False
