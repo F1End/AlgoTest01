@@ -32,13 +32,10 @@ class Student:
             self.preferences[teacher.name] = teacher.availability
 
 def element_indexing(availability_list: List, preference_list: List) -> int:
-    """Returning which is the earliest number where an overlap occurs between two lists (indexed from 1).
-    Returning 0 if no overlap found."""
     for pref in preference_list:
         if pref in availability_list:
             return preference_list.index(pref) + 1
     return 0
-
 
 
 def gale_shapley(teachers, students):
@@ -79,13 +76,15 @@ def gale_shapley(teachers, students):
 if __name__ == "__main__":
     teacher1 = Teacher("Teacher1", ["Monday: 8-10", "Wednesday: 14-16"])
     teacher2 = Teacher("Teacher2", ["Tuesday: 12-14", "Thursday: 9-11"])
+    teacher3 = Teacher("Teacher3", ["Friday: 12-14", "Thursday: 9-11"])
 
     student1 = Student("Student1", ["Monday: 8-10", "Tuesday: 9-11", "Thursday: 9-11"])
     student2 = Student("Student2", ["Wednesday: 14-16", "Thursday: 9-11"])
     student3 = Student("Student3", ["Tuesday: 12-14", "Wednesday: 14-16"])
+    student4 = Student("Student4", ["Friday: 12-14", "Wednesday: 14-16", "Thursday: 9-11"])
 
-    teachers = [teacher1, teacher2]
-    students = [student1, student2, student3]
+    teachers = [teacher1, teacher2, teacher3]
+    students = [student1, student2, student3, student4]
 
     for teacher in teachers:
         teacher.set_preferences(students)

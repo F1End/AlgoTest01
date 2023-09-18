@@ -34,10 +34,13 @@ class TimeMatrix:
         row_data = [client, client.name]
         for timeslot in self.provider.avaibility:
             if timeslot in client.avaibility:
-                row_data.append("1")
+                row_data.append(1)
             else:
-                row_data.append("0")
+                row_data.append(0)
         return row_data
+
+    def sum_values(self):
+        self.matrix['option_count'] = self.matrix[list(self.matrix.columns)].sum(axis=1, numeric_only=True)
 
     def construct_row(self, client):
         """
@@ -72,7 +75,8 @@ client4 = Client("Dia", ["Tue: 12"])
 clients = [client1, client2, client3, client4]
 
 calendar = TimeMatrix(provider, clients)
-print(calendar.matrix)
+calendar.sum_values()
 
 
 print(calendar.matrix.to_string())
+
