@@ -9,6 +9,9 @@ class Client:
         self.avaibility = avaibility
         self.name = name
 
+    def __repr__(self):
+        return self.name
+
 
 class Provider:
     def __init__(self, prefered_avaibility):
@@ -22,16 +25,14 @@ class TimeMatrix:
         self.matrix = self.construct_matrix()
 
     def construct_matrix(self):
-        columns = ["client", "client_name"]
+        columns = ["client"]
         columns.extend(self.provider.avaibility)
-        print(self.provider.avaibility)
-        print(columns)
         rows = [self.initiate_rows(clnt) for clnt in self.clients]
         df = pd.DataFrame(rows, columns=columns)
         return df
 
     def initiate_rows(self, client):
-        row_data = [client, client.name]
+        row_data = [client]
         for timeslot in self.provider.avaibility:
             if timeslot in client.avaibility:
                 row_data.append(1)
@@ -50,11 +51,9 @@ class TimeMatrix:
         """
         row = {col: 0 for col in self.matrix.columns}
         row["client"] = client
-        row["client_name"] = client.name
         for col in self.matrix.columns:
             if col in client.avaibility:
                 pass
-        # self.matrix = self.matrix.append(row, ignore_index=True)
 
     def update_row(self, client):
         """
@@ -80,3 +79,4 @@ calendar.sum_values()
 
 print(calendar.matrix.to_string())
 
+print(calendar.matrix.sort_values("option_count").to_string())
