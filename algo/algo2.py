@@ -61,22 +61,3 @@ class TimeMatrix:
         :param client:
         :return:
         """
-
-
-provider_avaibility = ["Mon: 8", "Mon: 10", "Mon: 12", "Tue: 8", "Tue: 10", "Tue: 12", "Wed: 10", "Wed: 12"]
-provider = Provider(provider_avaibility)
-
-client1 = Client("Anna", ["Mon: 8", "Mon: 10", "Mon: 12", "Tue: 8", "Tue: 10"])
-client2 = Client("Bea", ["Tue: 10", "Tue: 12", "Wed: 10"])
-client3 = Client("Cecil", ["Mon: 12", "Tue: 8", "Tue: 10"])
-client4 = Client("Dia", ["Tue: 12"])
-
-clients = [client1, client2, client3, client4]
-
-calendar = TimeMatrix(provider, clients)
-calendar.sum_values()
-
-
-print(calendar.matrix.to_string())
-
-print(calendar.matrix.sort_values("option_count").to_string())
